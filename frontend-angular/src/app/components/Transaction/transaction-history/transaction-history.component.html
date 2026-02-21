@@ -1,0 +1,146 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row gap-7 mb-6">
+    <h1 class="text-2xl font-bold mb-6 text-gray-700">
+      Transaction History
+    </h1>
+
+    <mat-form-field appearance="fill" class="w-full md:w-1/3">
+      <mat-label>Search By Only Transaction Id</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search..." />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+        <input matStartDate formControlName="start" placeholder="Start date" (dateChange)="filterByDate()">
+        <input matEndDate formControlName="end" placeholder="End date" (dateChange)="filterByDate()">
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+
+      @if (range.controls.start.hasError('matStartDateInvalid')) {
+      <mat-error>Invalid start date</mat-error>
+      }
+      @if (range.controls.end.hasError('matEndDateInvalid')) {
+      <mat-error>Invalid end date</mat-error>
+      }
+    </mat-form-field>
+
+  </div>
+
+
+  <!-- Card Container -->
+  <mat-card class="shadow-lg rounded-2xl">
+
+    <div class="overflow-x-auto">
+
+      <table mat-table [dataSource]="dataSource" matSort class="min-w-full">
+
+        <!-- ID -->
+        <ng-container matColumnDef="TransactionId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Txn ID</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.txnId }}
+          </td>
+        </ng-container>
+
+        <!-- From Account -->
+        <ng-container matColumnDef="fromAccFullName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>From Account</th>
+          <td mat-cell *matCellDef="let element">
+            {{element.account.fullName}}
+          </td>
+        </ng-container>
+
+        <!-- From Account -->
+        <ng-container matColumnDef="fromoAccId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>From AccountId</th>
+          <td mat-cell *matCellDef="let element">
+            {{element.account.accountId}}
+          </td>
+        </ng-container>
+
+        <!-- toAccFullName -->
+        <ng-container matColumnDef="toAccFullName">
+          <th mat-header-cell *matHeaderCellDef>To Account</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.toAccFullname }}
+          </td>
+        </ng-container>
+
+
+        <!-- Amount -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+          <td mat-cell *matCellDef="let element" [ngClass]="{'text-green-500 font-semibold':accountIds.includes(element.toAccountId) || accountIds.includes(element.account.accountId),
+                          'text-red-500 font-semibold':!accountIds.includes(element.toAccountId) && accountIds.includes(element.account.accountId)
+                         }">
+            {{ accountIds.includes(element.toAccountId) ?'+₹'+element.amount:'- ₹'+element.amount}}
+          </td>
+        </ng-container>
+
+
+
+
+        <!-- Type -->
+        <ng-container matColumnDef="txnType">
+          <th mat-header-cell *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.txnType }}
+          </td>
+        </ng-container>
+
+        <!-- Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="px-3 py-1 rounded-full text-sm font-medium" [ngClass]="getStatusClass(element.status)">
+              {{ element.status }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- ToAccountId -->
+        <ng-container matColumnDef="toAccountId">
+          <th mat-header-cell *matHeaderCellDef>ToAccountId</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.toAccountId }}
+          </td>
+        </ng-container>
+
+        <!-- deviceId -->
+        <ng-container matColumnDef="deviceId">
+          <th mat-header-cell *matHeaderCellDef>deviceId</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.device.deviceId }}
+          </td>
+        </ng-container>
+
+        <!-- DateAndTime -->
+        <ng-container matColumnDef="DateAndTime">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>DateAndTime</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.timeStamp | date:'dd-MM-yyyy HH:mm:ss' }}
+          </td>
+        </ng-container>
+
+
+
+        <!-- Header & Rows -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-gray-100"></tr>
+
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover:bg-gray-50 transition">
+        </tr>
+
+      </table>
+    </div>
+
+    <!-- Paginator -->
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
+
+  </mat-card>
+</div>

@@ -1,0 +1,37 @@
+<div class="p-6">
+
+  <h1 class="text-2xl font-bold text-gray-800 underline text-center mb-6">
+    Admin Dashboard
+  </h1>
+
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
+
+    <button mat-raised-button color="primary" routerLink="/adminDashBoard/viewTransactions" class="h-20 text-lg font-medium">
+      View and Manage Transactions
+    </button>
+
+    <button mat-raised-button color="accent" routerLink="/adminDashBoard/manageAccounts" class="h-20 text-lg font-medium">
+      View and Manage Accounts
+    </button>
+
+    <button mat-raised-button color="warn" routerLink="/adminDashBoard/fraudAlerts" class="h-20 text-lg font-medium">
+      View and Manage Fraud Alerts
+    </button>
+
+    <button mat-stroked-button routerLink="/adminDashBoard/manageUsers" class="h-20 text-lg font-medium !bg-orange-400">
+      View and Manage User Management
+    </button>
+
+    <button mat-stroked-button routerLink="/adminDashBoard/fraudRecords" class="h-20 text-lg font-medium !bg-yellow-300">
+     View and Manage FraudCases
+    </button>
+
+    <button mat-stroked-button routerLink="/adminDashBoard/deviceHistory" class="h-20 text-lg font-medium !bg-amber-500">
+     View and Manage Devices
+    </button>
+
+
+  </div>
+
+</div>

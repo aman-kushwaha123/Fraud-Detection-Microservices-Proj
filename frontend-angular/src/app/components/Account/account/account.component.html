@@ -1,0 +1,73 @@
+<div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+  <!-- Accounts List -->
+  <mat-card class="col-span-1 shadow-md rounded-xl border border-gray-200">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center px-5 py-4 border-b border-gray-200">
+      <h2 class="text-lg font-semibold text-gray-800">
+        Accounts ({{ accounts?.length || 0 }})
+      </h2>
+
+      <button mat-raised-button color="primary" routerLink="/accounts/add" class="!rounded-lg">
+        + Add Account
+      </button>
+    </div>
+
+    <!-- List -->
+    <mat-nav-list class="p-3">
+
+      <mat-list-item *ngFor="let account of accounts">
+
+        <div (click)="selectAccount(account)"
+          class="w-full p-4 rounded-lg border transition-all duration-150 ease-in-out cursor-pointer" [ngClass]="{
+          'border-blue-500 bg-blue-50 shadow-sm': selectedAccount === account,
+          'border-gray-200 hover:bg-gray-50': selectedAccount !== account
+        }">
+
+          <div class="font-semibold text-gray-800">
+            {{ account.fullName }}
+          </div>
+
+          <div class="text-sm text-gray-500 mt-1">
+            Account No: {{ account.accountNumber }}
+          </div>
+
+        </div>
+
+      </mat-list-item>
+
+    </mat-nav-list>
+
+  </mat-card>
+
+
+  <!-- Account Details -->
+  <mat-card class="col-span-2 shadow-lg border border-gray-200 rounded-lg" *ngIf="selectedAccount; else emptyState">
+    <div class="px-6 py-4">
+      <h2 class="text-2xl font-semibold mb-4 text-gray-800 border-b pb-2">
+        Account Details
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3 text-gray-700">
+        <p><span class="font-medium">FullName:</span> {{ selectedAccount.fullName }}</p>
+        <p><span class="font-medium">Username:</span> {{ selectedAccount.username }}</p>
+        <p><span class="font-medium">Account Number:</span> {{ selectedAccount.accountNumber }}</p>
+        <p><span class="font-medium">Mobile Number:</span> {{ selectedAccount.mobileNo }}</p>
+        <p><span class="font-medium">Type:</span> {{ selectedAccount.accountType }}</p>
+        <p class="text-green-600 font-semibold"><span class="font-medium">Balance:</span> ₹{{
+          selectedAccount.accountBalance }}</p>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- Empty State -->
+  <ng-template #emptyState>
+    <mat-card class="col-span-2 flex items-center justify-center h-48 border border-gray-200 rounded-lg shadow-md">
+      <p class="text-gray-400 text-lg">
+        Select an account to view details
+      </p>
+    </mat-card>
+  </ng-template>
+
+</div>

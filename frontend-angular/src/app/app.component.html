@@ -1,0 +1,58 @@
+<mat-sidenav-container class="h-screen w-screen">
+
+  <mat-sidenav #sidenav mode="side" closed class="!bg-blue-900 !text-white">
+    @if(isLoggedIn()){
+     <!--side nav content-->
+     <nav class="flex flex-col space-y-4 text-white w-40 h-full items-center pt-20">
+      <a routerLink="/profile" routerLinkActive="text-yellow-300" class="cursor-pointer hover:underline" (click)="sidenav.close()">Profile</a>
+      <a routerLink="/home" routerLinkActive="text-yellow-300" class="cursor-pointer hover:underline" (click)="sidenav.close()">Home</a>
+      <a routerLink="/accounts" routerLinkActive="text-yellow-300" class="cursor-pointer hover:underline" (click)="sidenav.close()">Accounts</a>
+      <a routerLink="/transaction" routerLinkActive="text-yellow-300" class="cursor-pointer hover:underline" (click)="sidenav.close()">Transaction</a>
+      <a routerLink="/transaction/history" routerLinkActive="text-yellow-300" class="cursor-pointer hover:underline" (click)="sidenav.close()">Transaction History</a>
+      @if(isAdmin()){
+      <a routerLink="/adminDashboard" routerLinkActive="text-yellow-300" class="cursor-pointer hover:underline" (click)="sidenav.close()">Admin Dashboard</a>
+      }
+      <a  routerLinkActive="text-yellow-300" class="cursor-pointer hover:underline" (click)="sidenav.close();logout()">Logout</a>
+     </nav>
+    }
+  </mat-sidenav>
+   <!-- Main Content Area -->
+  <!-- Header at the top -->
+  <mat-sidenav-content class="bg-gray-100 flex flex-col">
+    <!-- Optional Top Header -->
+    <mat-toolbar class="px-4 shadow-md !bg-blue-900 !text-white flex justify-between">
+      <div class="flex flex-row gap-4">
+        <button mat-icon-button (click)="sidenav?.toggle()" class="mr-2 md:hidden ">
+          <mat-icon class="!text-white">menu</mat-icon>
+        </button>
+
+        <div class="mt-1 ">
+          <span class="mb-3 hover:underline hover:cursor-pointer" routerLink="/home">AKPay</span>
+        </div>
+      </div>
+      @if(user){
+      <div class="">
+        <p><strong>{{user.username}}</strong></p>
+      </div>
+    }
+    </mat-toolbar>
+
+    <!-- Routed Pages -->
+   <!-- Main content wrapper, apply blur when loading -->
+    <main class="flex-1 min-h-screen">
+      <router-outlet></router-outlet>
+    </main>
+
+
+    <!-- Footer at the bottom -->
+    <footer>
+      <app-footer></app-footer>
+    </footer>
+
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+
+

@@ -1,0 +1,67 @@
+<div class="min-h-screen flex items-center justify-center bg-slate-100 px-4">
+  <mat-card class="w-full max-w-md p-6 rounded-2xl shadow-xl">
+
+    <h2 class="text-2xl font-bold text-center mb-1">
+      Create Payment Account
+    </h2>
+    <p class="text-center text-sm text-gray-500 mb-6">
+      Secure & compliant digital payments
+    </p>
+
+    <form [formGroup]="accountRegister" (ngSubmit)="submit()" class="space-y-4">
+      <!-- fullname-->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Full Name</mat-label>
+        <input matInput formControlName="fullname" maxlength="15" />
+      </mat-form-field>
+
+      <!--Mobile Number-->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Mobile Number</mat-label>
+        <input matInput formControlName="mobileNo" maxlength="10" />
+      </mat-form-field>
+
+      <!-- Account Number  -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Account Number</mat-label>
+        <input matInput formControlName="accountNumber" maxlength="15" />
+      </mat-form-field>
+
+      <!--Account Type-->
+      <mat-form-field class="w-full">
+        <mat-label>Choose an Account Type</mat-label>
+        <mat-select  formControlName="accountType">
+          <mat-option *ngFor="let accountType of accountTypeList" [value]="accountType">{{accountType}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="accountRegister.get('accountType')?.invalid">
+          Select any one Account Type
+        </mat-error>
+      </mat-form-field>
+
+
+
+      <!--Account Balance-->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Account Balance</mat-label>
+        <input matInput formControlName="accountBalance" maxlength='4' />
+      </mat-form-field>
+
+
+      <!-- Terms -->
+      <mat-checkbox  class="text-sm ">
+        I agree to the
+        <a class="text-primary underline ml-1" href="#">
+          Terms & Privacy Policy
+        </a>
+      </mat-checkbox>
+
+      <!-- Submit -->
+      <button mat-raised-button color="primary" class="w-full py-2 mt-2" [disabled]="accountRegister.invalid">
+        Create Secure Account
+      </button>
+    </form>
+    <button mat-raised-button color="primary" class="w-full py-2 mt-2" (click)="goBack()">
+       Back
+    </button>
+  </mat-card>
+</div>

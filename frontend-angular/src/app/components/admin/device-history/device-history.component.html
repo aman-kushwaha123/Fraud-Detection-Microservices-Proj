@@ -1,0 +1,100 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+  <button mat-flat-button class="!text-lg m-2 !bg-gray-600 !text-white !rounded-lg" (click)="goBack()">
+    <span class="mr-2 text-lg ">&#8592;</span> <!-- Left arrow -->
+    Back
+  </button>
+  <div class="bg-white rounded-xl shadow-lg p-6">
+
+    <h2 class="text-2xl font-bold mb-6 text-gray-700">
+      Admin - Manage Devices
+    </h2>
+
+    <!-- Filters -->
+    <div class="flex flex-col md:flex-row gap-4 mb-6">
+
+      <mat-form-field appearance="fill" class="w-full md:w-1/3">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search RISK">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full md:w-1/3">
+        <mat-label>RISK LEVEL</mat-label>
+        <mat-select [(ngModel)]="riskLevelFilter" (selectionChange)="filterByRiskLevel()">
+          <mat-option value="">All</mat-option>
+          <mat-option value="NORMAL">NORMAL</mat-option>
+          <mat-option value="SUSPICIOUS">SUSPICIOUS</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+
+      <table mat-table [dataSource]="dataSource" matSort class="w-full">
+
+        <ng-container matColumnDef="deviceId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Device Id</th>
+          <td mat-cell *matCellDef="let element">{{element.deviceId}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="userId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>User ID</th>
+          <td mat-cell *matCellDef="let element">{{element.userId}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastUsed">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Used</th>
+          <td mat-cell *matCellDef="let element">{{element.lastUsed | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+        </ng-container>
+
+         <ng-container matColumnDef="visitorId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Visitor Id</th>
+          <td mat-cell *matCellDef="let element">{{element.visitorId}}</td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="riskLevel">
+
+          <th mat-header-cell *matHeaderCellDef>Risk Level</th>
+          <td mat-cell *matCellDef="let element">
+             <span class="px-3 py-1 rounded-full text-sm font-medium" [ngClass]="{
+                'bg-green-100 text-green-700': element.riskLevel === 'NORMAL',
+                'bg-red-100 text-red-500': element.riskLevel === 'SUSPICIOUS',
+              }">
+              {{element.riskLevel}}
+            </span>
+          </td>
+        </ng-container>
+
+
+       <ng-container matColumnDef="deletedeviceHistory">
+
+          <th mat-header-cell *matHeaderCellDef>Delete Device</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-flat-button class="!text-sm !bg-red-600 !text-black !rounded-2xl"
+              (click)="deleteDeviceHistory(element.deviceId)">
+              Delete
+            </button>
+          </td>
+        </ng-container>
+
+
+       <tr mat-header-row *matHeaderRowDef="displayedColumns"
+            class="bg-gray-100"></tr>
+
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            class="hover:bg-gray-50 transition">
+        </tr>
+
+      </table>
+
+    </div>
+
+    <!-- Pagination -->
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
+
+  </div>
+</div>
