@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
+    <!-- Import Spring Boot default logback setup -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    
+     <!-- Prevents disk overflow -->
+     <!-- Safe for 4-5 hours runs -->
+     <property name="LOG_PATH" value="logs"/>
+     
+     <!-- File appender with rolling -->
+     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+             <file>${LOG_PATH}/application.log</file>
+     
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>${LOG_PATH}/app-%d{yyyy-MM-dd}.log</fileNamePattern>
+        <maxHistory>5</maxHistory>
+        <totalSizeCap>500MB</totalSizeCap>
+    </rollingPolicy>
+    <encoder>
+       <pattern>%d{HH:mm:ss} %-5level%logger{36} - %msg%n</pattern>
+    </encoder>
+    </appender>
+    
+     <!-- Reduce kafka noise -->
+     <logger name="org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient" level="WARN" />
+     <logger name="org.apache.kafka.clients.NetworkClient" level="WARN" />
+     <logger name="org.apache.kafka.clients.FetchSessionHandler" level="WARN" />
+      <!-- This is the main for printing thie kafka log including,connection,client,etc -->
+     <logger name="org.apache.kafka" level="WARN" /> 
+     
+     <!-- Root logger stays as Spring Boot default -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+    
+</configuration>
+
+

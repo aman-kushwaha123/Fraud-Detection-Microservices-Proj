@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+     
+     <!-- Reduce kafka noise -->
+     <logger name="com.netflix.eureka" level="WARN" />
+     <logger name="com.netflix.discovery" level="WARN" />
+     <logger name="org.springframework.cloud.netflix.eureka" level="WARN" />
+     
+     <!-- Root logger stays as Spring Boot default -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+    
+</configuration>
+
+

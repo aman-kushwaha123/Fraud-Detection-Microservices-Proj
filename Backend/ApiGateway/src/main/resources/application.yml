@@ -1,0 +1,99 @@
+#Downlaod the YAML editor 1.9.something from HElP->ECLIPSE MARKETPLACE
+#For LoadBalancing 1st->connect to service registry then add this lb://IDENTITY-SERVICE
+#we can do by making separate routes for the same SERVICE /userCredential/admin/** → ROLE_ADMIN only  
+spring:
+  cloud:
+    gateway:
+      routes:
+        
+        - id: IDENTITY-SERVICE
+          uri: http://localhost:8084
+          predicates:
+          - Path=/userCredential/**
+          filters:
+           - name: AuthenticationFilter
+             args:
+               requiredRoles:
+                  - ROLE_USER
+                  - ROLE_ADMIN
+
+        - id: ACCOUNTDETAIL-SERVICE
+          uri: http://localhost:8080
+          predicates:
+            - Path=/Account/**
+          filters:
+            - name: AuthenticationFilter
+              args:
+                requiredRoles:
+                  - ROLE_USER
+                  - ROLE_ADMIN
+                  
+                   
+        - id: ALERT-SERVICE
+          uri: http://localhost:8081
+          predicates:
+             - Path=/alert/**,/ws,/ws/**
+          filters:
+             - name: AuthenticationFilter
+               args: 
+                  requiredRoles:
+                      - ROLE_USER
+                      - ROLE_ADMIN
+           
+                   
+        - id: FRAUD_CASES_REC-SERVICE
+          uri:  http://localhost:8083
+          predicates:
+               - Path=/FraudRec/**
+          filters:
+             - name: AuthenticationFilter
+               args:
+                  requiredRoles:
+                     - ROLE_USER
+                     - ROLE_ADMIN
+         
+        - id : DEVICEHISTORY-SERVICE
+          uri:  http://localhost:8082
+          predicates:
+            - Path=/device/**
+          filters:
+            - name: AuthenticationFilter
+              args:
+                requiredRoles:
+                  - ROLE_USER
+                  - ROLE_ADMIN
+          
+                  
+        - id: ML-SERVICE
+          uri:  http://localhost:8085
+          predicates:
+            - Path=/Fraud/**
+          filters:
+            - name: AuthenticationFilter
+              args:
+               requiredRoles:
+                 - ROLE_USER
+                 - ROLE_ADMIN
+                 
+           
+        - id: TRANSACTIONS-SERVICE
+          uri:  http://localhost:8086
+          predicates:
+            - Path=/transaction/**
+          filters:
+            - name: AuthenticationFilter
+              args:
+                requiredRoles:
+                  - ROLE_USER
+                  - ROLE_ADMIN
+                  
+                  
+             
+              
+
+                  
+                  
+        
+                    
+        
+        

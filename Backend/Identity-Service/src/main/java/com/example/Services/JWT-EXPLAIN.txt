@@ -1,0 +1,67 @@
+/*JWT BIG STRUCTURE
+	 * HEADER.PAYLOAD.SIGNATURE
+	   Claims live inside the PAYLOAD
+	 */
+	 
+Types of Claims
+1️)Registered Claims (Standard)
+| Claim | Meaning                               |
+| ----- | ------------------------------------- |
+| `sub` | Subject (usually username or user ID) |
+| `iat` | Issued At (token creation time)       |
+| `exp` | Expiration time                       |
+| `iss` | Issuer                                |
+| `aud` | Audience                              |
+
+2)Custom Claims (User-defined)
+
+These are extra details you choose to include.
+
+Examples:
+
+role
+email
+userId
+permissions
+
+3)Claims in Your Code
+Creating claims
+Map<String, Object> claims = new HashMap<>();
+
+Right now, this map is empty, meaning:
+
+Your token only contains standard claims (sub, iat, exp)
+
+3)About extractClaims() function
+   This method:
+
+	Verifies token signature
+
+	Decodes payload
+
+	Returns Claims object
+	
+4)Jwt Payload
+  Example JWT Payload (Claims)
+{
+  "sub": "john_doe",
+  "iat": 1700000000,
+  "exp": 1700003600,
+  "role": "ADMIN",
+  "email": "john@gmail.com"
+}
+
+5)
+  Header → algorithm + token type
+
+Payload → claims (user data)
+
+Signature → integrity & authenticity
+
+What Does the Signature Do?
+
+The signature locks the header and payload together.
+
+If any single character in the token changes:
+❌ Signature validation fails
+❌ Token is rejected
