@@ -2,7 +2,7 @@
 <h2>Overview</h2>
 This project detects fraudulent transactions in an online payment system using a hybrid approach that combines rule-based logic and probability scoring. A transaction is flagged as fraud only when it satisfies predefined rules and has a high fraud probability score.
 
-<h2>Rule-Based Conditions (All must be satisfied)</h2>
+<h2>Rule-Based Conditions (Any one or all condition must be satisfied)</h2>
 
  <ul>
       <li>Transaction amount &gt; Old balance (Abnormal Amount Behavior)</li>
