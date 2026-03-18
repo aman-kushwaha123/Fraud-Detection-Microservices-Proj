@@ -1,6 +1,24 @@
 <h1>Fraud Detection in Online Payment System</h1>
 <h2>Overview</h2>
 This project detects fraudulent transactions in an online payment system using a hybrid approach that combines rule-based logic and probability scoring. A transaction is flagged as fraud only when it satisfies predefined rules and has a high fraud probability score.
+
+<h2>Rule-Based Conditions (All must be satisfied)</h2>
+
+ <ul>
+      <li>Transaction amount &gt; Old balance (Abnormal Amount Behavior)</li>
+      <li>Transactions in last hour ≥ 5 (High Transaction Frequency)</li>
+      <li>Number of devices ≥ 2 (Multiple Device Usage)</li>
+  </ul>
+
+ <h2>Probability Condition</h2>
+  
+ <ul>
+      <li>Fraud probability score is calculated</li>
+      <li>If Probability &gt; 0.7, the transaction is considered high risk</li>
+ </ul>
+  
+
+
 <h1>Technology Stack</h1>
 
 <h2>Frontend</h2>
