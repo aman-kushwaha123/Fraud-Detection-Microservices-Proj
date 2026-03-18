@@ -2,6 +2,8 @@ package com.example.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,7 @@ public class FraudResponse {
 	
 	private float fraud_probability;
 	
+	@JsonProperty("is_Fraud")
 	private int isFraud;
 	
 	private  List<String> reasons;

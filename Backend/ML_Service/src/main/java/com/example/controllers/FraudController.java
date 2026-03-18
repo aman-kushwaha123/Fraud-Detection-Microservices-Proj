@@ -77,6 +77,11 @@ public class FraudController {
 			return ResponseEntity.ok(Map.of("message","Successfully predicted reason","is_Fraud",true));
 		}
 		else {
+			ML_Response ml_Response=new ML_Response();
+			ml_Response.setTxnId(transaction.getTxnId());
+			ml_Response.setUserId(transaction.getUserId());
+			ml_Response.setFraudResponse(response);
+			kafkaProducerService.sendFraudResponse(ml_Response);
 			return ResponseEntity.ok(Map.of("message","Fraud Response is null"));		
 			
 	    }

@@ -22,3 +22,8 @@ Thumbs.db
 
 #Env
 .env
+
+#frontend
+node_modules/
+dist/
+build/

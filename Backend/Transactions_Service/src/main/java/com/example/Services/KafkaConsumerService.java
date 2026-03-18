@@ -18,8 +18,11 @@ import com.example.entities.AccountDetails;
 import com.example.entities.Device_History;
 import com.example.entities.ML_Response;
 import com.example.entities.Transactions;
+import com.example.entities.Transactions.Status;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.transaction.Transactional.TxType;
 
 @Service
 public class KafkaConsumerService {
@@ -96,7 +99,11 @@ public class KafkaConsumerService {
 			this.ml_Res=ml_Response;
 		}
 		else {
-			kafkaProducerService.sendTxnAcc(transaction);
+			this.is_Fraud=false;
+			transaction.setStatus(Status.SUCCESS);
+			Transactions txn=transaction_Repo.save(transaction);
+			kafkaProducerService.sendTxnAcc(txn);
+			System.out.println("Produced Successfull transaction");
 		}
 		
 		System.out.println("After the if");

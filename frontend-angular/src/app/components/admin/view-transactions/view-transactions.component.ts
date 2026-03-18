@@ -57,6 +57,7 @@ export class ViewTransactionsComponent {
     'deviceId',
     'timeStamp',
     'userId',
+    'isFraud',
     'deleteTransaction'
   ];
   transactions: any[] = []

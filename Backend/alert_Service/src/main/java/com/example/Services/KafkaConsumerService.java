@@ -36,13 +36,16 @@ public class KafkaConsumerService {
 	    	System.out.println("Successfully received ML_Response in Alert Service"+ml_Response);
 	    	System.out.println(ml_Response.getUserId());
 	    	System.out.println("UserId "+ml_Response.getUserId());
-	        Alerts alerts = new Alerts();
-	        alerts.setTxnId(ml_Response.getTxnId());
-	        alerts.setUserId(ml_Response.getUserId());
-	        alerts.setAlertMessage(ml_Response.getFraudResponse().getReasons());
-	        alerts.setStatus(Status.SENT);
-	        alert_Repo.save(alerts);
-	        messagingTemplate.convertAndSend("/topic/alert."+ml_Response.getUserId(), alerts);
+	    	if(ml_Response.getFraudResponse().getIsFraud() !=0) {
+	    		Alerts alerts = new Alerts();
+		        alerts.setTxnId(ml_Response.getTxnId());
+		        alerts.setUserId(ml_Response.getUserId());
+		        alerts.setAlertMessage(ml_Response.getFraudResponse().getReasons());
+		        alerts.setStatus(Status.SENT);
+		        alert_Repo.save(alerts);
+		        messagingTemplate.convertAndSend("/topic/alert."+ml_Response.getUserId(), alerts);
+	    	}
+	        
 	    }
 
 	    

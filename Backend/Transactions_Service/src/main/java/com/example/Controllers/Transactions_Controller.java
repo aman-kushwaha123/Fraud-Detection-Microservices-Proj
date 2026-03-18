@@ -68,7 +68,8 @@ public class Transactions_Controller {
 		   txn_Count_1Hr.setTxn_count_1hr(count);
 		   kafkaProducerService.SendTxn_Count_1Hr(txn_Count_1Hr);
 		   System.out.println("Txn_Count_1Hr"+count);
-		   if(kafkaConsumerService.getIsFraud() != false) {
+		   System.out.println(kafkaConsumerService.getIsFraud());
+		   /*if(kafkaConsumerService.getIsFraud() == false) {
 			   Transactions updateTransactions=transaction_Repo.findById(transaction1.getTxnId())
 					   .orElseThrow(()->new RuntimeException("UpdateTransaction Not Found"));
 			   updateTransactions.setStatus(Status.SUCCESS);
@@ -76,9 +77,8 @@ public class Transactions_Controller {
 			   System.out.println("Successfully Updated Transaction status");
 		   return ResponseEntity
 				   .ok(Map.of("message","Transaction Added in Db and Message Sent Successfully","is_Fraud",kafkaConsumerService.getIsFraud()));
-		   }
-	       System.out.println("Not Consumed yet");
-	       return ResponseEntity.ok(Map.of("message","not Consumed yet","is_Fraud",kafkaConsumerService.getIsFraud()));
+		   }*/
+	       return ResponseEntity.ok(Map.of("message","Transaction Created","is_Fraud",kafkaConsumerService.getIsFraud()));
 	}
 	
 	@DeleteMapping("/deleteAll")
