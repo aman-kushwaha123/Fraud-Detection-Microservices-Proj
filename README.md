@@ -1,11 +1,6 @@
 <h1>Fraud Detection in Online Payment System</h1>
 <h2>Overview</h2>
-Online transactions have become an essential part of the modern economy, but fraudulent
-activities are increasing rapidly. This project aims to detect online payment frauds in
-real-time using microservices architecture and Apache Kafka. The backend is developed with
-Spring Boot (in Eclipse), the Machine Learning model is built using Python, and the frontend
-is designed using Angular. The system ensures modularity, scalability, and quick response to
-suspicious transactions.
+This project detects fraudulent transactions in an online payment system using a hybrid approach that combines rule-based logic and probability scoring. A transaction is flagged as fraud only when it satisfies predefined rules and has a high fraud probability score.
 <h1>Technology Stack</h1>
 
 <h2>Frontend</h2>
